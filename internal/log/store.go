@@ -41,7 +41,7 @@ func (s *store) Append(p []byte) (n, pos uint64, err error) {
 
   pos = s.size
   // 为什么调用两次? 先写入 p 的长度, 然后写入 p 的内容
-  if err := binary.Write(s.buf, enc, uint64(len(p)); err != nil {
+  if err := binary.Write(s.buf, enc, uint64(len(p))); err != nil {
     return 0, 0, nil
   }
 
@@ -80,7 +80,7 @@ func (s *store) Read(pos uint64) ([]byte, error) {
 
 func (s *store) ReadAt(p []byte, off int64) (int, error) {
   s.mu.Lock()
-  def s.mu.Unlock()
+  defer s.mu.Unlock()
   if err := s.buf.Flush(); err != nil {
     return 0, err
   }

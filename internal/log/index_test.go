@@ -31,7 +31,7 @@ func TestIndex(t *testing.T) {
   for _, want := range entries {
     err = idx.Write(want.Off, want.Pos)
     require.NoError(t, err)
-    _, pos, err := idx.Read(int64(want.off))
+    _, pos, err := idx.Read(int64(want.Off))
     require.NoError(t, err)
     require.Equal(t, want.Pos, pos)
   }

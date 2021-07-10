@@ -19,13 +19,13 @@ type segment struct {
 func newSegment(dir string, baseOffset uint64, c Config) (*segment, error) {
   s := &segment{
     baseOffset: baseOffset,
-    config: c
+    config: c,
   }
   var err error
   storeFile, err := os.OpenFile(
     path.Join(dir, fmt.Sprintf("%d%s", baseOffset, ".store")),
     os.O_RDWR|os.O_CREATE|os.O_APPEND,
-    0644
+    0644,
   )
   if err != nil {
     return nil, err
@@ -83,7 +83,7 @@ func (s *segment) Read(off uint64) (*api.Record, error) {
   if err != nil {
     return nil, err
   }
-  record := *api.Record{}
+  record := &api.Record{}
   err = proto.Unmarshal(p, record)
   return record, err
 }

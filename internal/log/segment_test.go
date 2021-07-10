@@ -13,7 +13,7 @@ func TestSegment(t *testing.T) {
   dir, _ := ioutil.TempDir("", "segment_test")
   defer os.RemoveAll(dir)
   want := &api.Record{
-    Value: []byte("hello, world")
+    Value: []byte("hello, world"),
   }
   c := Config{}
   c.Segment.MaxStoreBytes = 1024
@@ -37,9 +37,6 @@ func TestSegment(t *testing.T) {
   require.Equal(t, io.EOF, err)
 
   require.True(t, s.IsMaxed())
-
-  err = s.Remove()
-  require.NoError(t, err)
 
   c.Segment.MaxStoreBytes = uint64(len(want.Value)*3)
   c.Segment.MaxIndexBytes = 1024

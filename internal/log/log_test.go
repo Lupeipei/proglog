@@ -32,7 +32,7 @@ func TestLog(t *testing.T) {
 
 func testAppendRead(t *testing.T, log *Log) {
   append := &api.Record{
-    Value: []byte("hello, world")
+    Value: []byte("hello, world"),
   }
   off ,err := log.Append(append)
   require.NoError(t, err)
@@ -51,10 +51,10 @@ func testOutOfRangeError(t *testing.T, log *Log) {
 
 func testInitExisting(t *testing.T, o *Log) {
   append := &api.Record{
-    Value: []byte("hello, world")
+    Value: []byte("hello, world"),
   }
 
-  for i := 0, i < 3; i++ {
+  for i := 0; i < 3; i++ {
     _, err := o.Append(append)
     require.NoError(t, err)
   }
@@ -80,8 +80,8 @@ func testInitExisting(t *testing.T, o *Log) {
 }
 
 func testReader(t *testing.T, log *Log) {
-  append := *api.Record{
-    Value: []byte("hello, world")
+  append := &api.Record{
+    Value: []byte("hello, world"),
   }
   off, err := log.Append(append)
   require.NoError(t, err)
@@ -90,17 +90,17 @@ func testReader(t *testing.T, log *Log) {
   reader := log.Reader()
   b, err := ioutil.ReadAll(reader)
 
-  read := &api.Recod{}
+  read := &api.Record{}
   err = proto.Unmarshal(b[lenWidth:], read)
   require.NoError(t, err)
   require.Equal(t, append.Value, read.Value)
 }
 
 func testTruncate(t *testing.T, log *Log) {
-  append := *api.Record{
-    Value: []byte("hello, world")
+  append := &api.Record{
+    Value: []byte("hello, world"),
   }
-  for i := 0, i < 3; i++ {
+  for i := 0; i < 3; i++ {
     _, err := log.Append(append)
     require.NoError(t, err)
   }

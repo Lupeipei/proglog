@@ -50,9 +50,9 @@ func (l *Log) setup() error {
   for _, file := range files {
     offStr := strings.TrimSuffix(
       file.Name(),
-      path.Ext(file.Name())
+      path.Ext(file.Name()),
     )
-    off, _ = strconv.ParseUint(offStr, 10, 0)
+    off, _ := strconv.ParseUint(offStr, 10, 0)
     baseOffsets = append(baseOffsets, off)
   }
 
@@ -130,13 +130,13 @@ func (l *Log) Reset() error {
 }
 
 func (l *Log) LowestOffset() (uint64, error) {
-  l.mu.Rlock()
+  l.mu.RLock()
   defer l.mu.RUnlock()
   return l.segments[0].baseOffset, nil
 }
 
 func (l *Log) HighestOffset() (uint64, error) {
-  l.mu.Rlock()
+  l.mu.RLock()
   defer l.mu.RUnlock()
   off := l.segments[len(l.segments) - 1].nextOffset
   if off == 0 {
@@ -177,13 +177,13 @@ type originReader struct {
   off int64
 }
 
-func (o *originReader) Read(p []byte) (int, err) {
+func (o *originReader) Read(p []byte) (int, error) {
   n, err := o.ReadAt(p, o.off)
   o.off += int64(n)
   return n, err
 }
 
-func (l *Log) newSegment(off int64) error {
+func (l *Log) newSegment(off uint64) error {
   s, err := newSegment(l.Dir, off, l.Config)
   if err != nil {
     return err

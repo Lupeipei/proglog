@@ -30,14 +30,14 @@ func newIndex(f *os.File, c Config)(*index, error) {
     return nil, err
   }
 
-  if idx.mmap, err = gommap.Map(idx.file.fd(), gommap.PORT_READ|gommap.PORT_WRITE, gommap.MAP_SHARED); err != nil {
+  if idx.mmap, err = gommap.Map(idx.file.Fd(), gommap.PROT_READ|gommap.PROT_WRITE, gommap.MAP_SHARED); err != nil {
     return nil, err
   }
   return idx, nil
 }
 
 func (i *index) Close() error {
-  if err := i.mmap.Sync(gommap.ms_sync); err != nil {
+  if err := i.mmap.Sync(gommap.MS_SYNC); err != nil {
     return err
   }
 
