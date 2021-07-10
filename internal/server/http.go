@@ -18,12 +18,12 @@ func NewHTTPServer(addr string) *http.Server {
 }
 
 type httpServer struct {
-  Log *log
+  Log *Log
 }
 
 func newHTTPServer() *httpServer {
-  return *httpServer{
-    Log: NewLog()
+  return &httpServer{
+    Log: NewLog(),
   }
 }
 

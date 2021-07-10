@@ -1,7 +1,7 @@
 package main
 import (
   "log"
-  "github.com/lupeipei/proglog/internal/server"
+  "github.com/Lupeipei/proglog/internal/server"
 )
 
 func main() {
