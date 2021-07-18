@@ -3,6 +3,7 @@ module github.com/Lupeipei/proglog
 go 1.14
 
 require (
+	github.com/cloudflare/cfssl v1.4.1 // indirect
 	github.com/golang/protobuf v1.4.1
 	github.com/gorilla/mux v1.8.0
 	github.com/stretchr/testify v1.7.0
