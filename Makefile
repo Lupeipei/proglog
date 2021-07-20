@@ -17,8 +17,7 @@ $(CONFIG_PATH)/policy.csv:
 	cp test/policy.csv $(CONFIG_PATH)/policy.csv
 
 .PHONY: test
-test: $(CONFIG_PATH)/policy.csv
-$(CONFIG_PATH)/model.conf
+test: $(CONFIG_PATH)/policy.csv $(CONFIG_PATH)/model.conf
 	go test -race ./...
 .PHONY: compile
 compile:
