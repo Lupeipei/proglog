@@ -1,4 +1,4 @@
-package log_test
+package log
 
 import (
   "bytes"
@@ -203,7 +203,7 @@ func (l *DistributedLog) Join(id, addr string) error {
       }
     }
   }
-  addFuture := l.raft.AddVoter(serverId, serverAddr, 0, 0)
+  addFuture := l.raft.AddVoter(serverID, serverAddr, 0, 0)
   if err := addFuture.Error(); err != nil {
     return err
   }

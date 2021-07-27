@@ -1,4 +1,4 @@
-package log
+package log_test
 
 import (
   "fmt"
@@ -16,11 +16,11 @@ import (
   "github.com/Lupeipei/proglog/internal/log"
 )
 
-func TestMultipleNodes(t *tesing.T) {
+func TestMultipleNodes(t *testing.T) {
   var logs []*log.DistributedLog
   nodeCount := 3
   ports := dynaport.Get(nodeCount)
-  if i := 0; i < nodeCount; i++ {
+  for i := 0; i < nodeCount; i++ {
     dataDir, err := ioutil.TempDir("", "distributed-log-test")
     require.NoError(t, err)
     defer func(dir string) {
@@ -91,7 +91,8 @@ func TestMultipleNodes(t *tesing.T) {
   require.IsType(t, api.ErrOffsetOutOfRange{}, err)
   require.Nil(t, record)
 
-  record, err := logs[2].Read(off)
+  // time.Sleep(1 * time.Second) if test fails, sleep more time for replicate
+  record, err = logs[2].Read(off)
   require.NoError(t, err)
   require.Equal(t, []byte("third"), record.Value)
   require.Equal(t, off, record.Offset)

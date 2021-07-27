@@ -120,7 +120,7 @@ func (m *Membership) logError(err error, msg string, member serf.Member) {
   if err == raft.ErrNotLeader {
     log = m.logger.Debug
   }
-  m.logger.Error(
+  log(
     msg,
     zap.Error(err),
     zap.String("name", member.Name),
